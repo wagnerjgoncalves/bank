@@ -8,9 +8,13 @@ an account.
 * Ruby 2.3.0
 * Rails 5.2.1
 
-## Setup
+## Setup dev enviroment
 
     bin/setup
+
+## Running tests
+
+    rspec
 
 ## Endpoints
 
