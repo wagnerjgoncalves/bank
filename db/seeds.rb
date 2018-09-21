@@ -1,0 +1,5 @@
+source_user = User.create!(name: 'Jhon Doe', email: 'jhondoe@example.com')
+destination_user = User.create!(name: 'Michael', email: 'michael@example.com')
+source_account = Account.create!(id: 1, user: source_user)
+destination_account = Account.create!(id: 2, user: destination_user)
+Transaction.create!(account: source_account, kind: :credit, amount: 100_000)
