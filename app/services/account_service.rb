@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AccountService
   def self.balance(account_id)
     account = Account.find_by(id: account_id)
@@ -14,7 +16,7 @@ class AccountService
     }
   end
 
-  def self.has_money?(account_id, amount)
+  def self.enough_money?(account_id, amount)
     response = balance(account_id)
 
     return true if response[:status] == :ok && response[:balance] >= amount

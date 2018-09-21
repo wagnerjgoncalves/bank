@@ -1,15 +1,20 @@
+# frozen_string_literal: true
+
 class TransferService
   def self.transfer_money(source_account_id, destination_account_id, amount)
     return render_source_account_error unless Account.exists?(source_account_id)
-    return render_destination_account_error unless Account.exists?(destination_account_id)
-    return render_without_money_error unless AccountService.has_money?(source_account_id, amount)
+
+    unless Account.exists?(destination_account_id)
+      return render_destination_account_error
+    end
+
+    unless AccountService.enough_money?(source_account_id, amount)
+      return render_without_money_error
+    end
 
     ActiveRecord::Base.transaction do
       begin
-        Transaction.create!(account_id: source_account_id, kind: :debit, amount: amount)
-        Transaction.create!(account_id: destination_account_id, kind: :credit, amount: amount)
-
-        render_transfer_money_successfuly
+        create_transactions!(source_account_id, destination_account_id, amount)
       rescue ActiveRecord::RecordInvalid => e
         render_error e.message
       end
@@ -17,6 +22,16 @@ class TransferService
   end
 
   class << self
+    def create_transactions!(src_account_id, dest_account_id, amount)
+      opts_src = { account_id: src_account_id, kind: :debit, amount: amount }
+      opts_des = { account_id: dest_account_id, kind: :credit, amount: amount }
+
+      Transaction.create!(opts_src)
+      Transaction.create!(opts_des)
+
+      render_transfer_money_successfuly
+    end
+
     def render_error(message)
       {
         status: :error,

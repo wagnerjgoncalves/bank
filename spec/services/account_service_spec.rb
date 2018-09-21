@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe AccountService do
@@ -43,7 +45,7 @@ describe AccountService do
     end
   end
 
-  describe '.has_money?' do
+  describe '.enough_money?' do
     let(:account) { create(:account) }
 
     before do
@@ -51,15 +53,15 @@ describe AccountService do
     end
 
     it 'should render `true` when balance is <= amount' do
-      has_money = described_class.has_money?(account.id, 999.99)
+      enough_money = described_class.enough_money?(account.id, 999.99)
 
-      expect(has_money).to eq true
+      expect(enough_money).to eq true
     end
 
     it 'should render `false` when balance is > amount' do
-      has_money = described_class.has_money?(account.id, 1_000.01)
+      enough_money = described_class.enough_money?(account.id, 1_000.01)
 
-      expect(has_money).to eq false
+      expect(enough_money).to eq false
     end
   end
 end
