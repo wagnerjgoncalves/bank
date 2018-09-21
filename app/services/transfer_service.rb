@@ -8,6 +8,8 @@ class TransferService
       return render_destination_account_error
     end
 
+    return render_accounts_error if source_account_id == destination_account_id
+
     unless AccountService.enough_money?(source_account_id, amount)
       return render_without_money_error
     end
@@ -37,6 +39,10 @@ class TransferService
         status: :error,
         message: message
       }
+    end
+
+    def render_accounts_error
+      render_error 'Cannot transfer money to the same account'
     end
 
     def render_destination_account_error

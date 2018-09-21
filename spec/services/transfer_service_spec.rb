@@ -28,6 +28,15 @@ describe TransferService do
     end
   end
 
+  describe 'when `source_account_id` is equal `destination_account_id`' do
+    it 'should render an error message' do
+      balance = described_class.transfer_money(source_account.id, source_account.id, nil)
+
+      expect(balance[:status]).to eq :error
+      expect(balance[:message]).to eq 'Cannot transfer money to the same account'
+    end
+  end
+
   describe 'when `amount` is invalid' do
     before do
       create(:transaction, :credit, account: source_account, amount: 500.0)
