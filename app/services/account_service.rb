@@ -15,4 +15,12 @@ class AccountService
       balance: credits - debits
     }
   end
+
+  def self.has_money?(account_id, amount)
+    response = balance(account_id)
+
+    return true if response[:status] == :ok && response[:balance] >= amount
+
+    false
+  end
 end
