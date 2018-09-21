@@ -26,8 +26,10 @@ describe AccountService do
 
     describe 'with `transactions`' do
       before do
-        create(:transaction, :debit, account: account, amount: 1_000.0)
-        create(:transaction, :credit, account: account, amount: 1_900.99)
+        create(:transaction, :debit, account: account, amount: 500.0)
+        create(:transaction, :debit, account: account, amount: 500.0)
+        create(:transaction, :credit, account: account, amount: 900.99)
+        create(:transaction, :credit, account: account, amount: 1_000.00)
       end
 
       it 'should render a balance data' do

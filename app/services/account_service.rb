@@ -5,14 +5,14 @@ class AccountService
       message: 'Invalid account'
     } unless Account.exists?(account_id)
 
-    transactions = Transaction.where(account_id: account_id)
-    debits = transactions.debit.collect(&:amount).reduce(:+) || 0
-    credits = transactions.credit.collect(&:amount).reduce(:+) || 0
-    balance = credits - debits
+    transactions = Transaction.select('sum(amount) as total')
+                              .where(account_id: account_id)
+    debits = transactions.debit&.first&.total || 0
+    credits = transactions.credit&.first&.total || 0
 
     {
       status: :ok,
-      balance: balance
+      balance: credits - debits
     }
   end
 end
