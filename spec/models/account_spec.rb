@@ -3,6 +3,8 @@ require 'rails_helper'
 describe Account do
   describe 'associations' do
     it { should belong_to(:user) }
+
+    it { should have_many(:transactions) }
   end
 
   describe 'validations' do
