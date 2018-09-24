@@ -4,6 +4,15 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_group 'Services', 'app/services'
+  add_filter 'vendor'
+  add_filter 'app/jobs/application_job.rb'
+end
+
+SimpleCov.minimum_coverage 90
+
 require 'shoulda/matchers'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?

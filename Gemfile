@@ -27,6 +27,7 @@ end
 group :test do
   gem 'database_cleaner', '~> 1.7'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2', require: false
+  gem 'simplecov', '~> 0.16.1', require: false
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
