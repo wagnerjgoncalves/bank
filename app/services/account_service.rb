@@ -25,6 +25,8 @@ class AccountService
   end
 
   class << self
+    private
+
     def render_invalid_account_error
       {
         status: :error,

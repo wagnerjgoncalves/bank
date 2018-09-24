@@ -24,6 +24,8 @@ class TransferService
   end
 
   class << self
+    private
+
     def create_transactions!(src_account_id, dest_account_id, amount)
       opts_src = { account_id: src_account_id, kind: :debit, amount: amount }
       opts_des = { account_id: dest_account_id, kind: :credit, amount: amount }
