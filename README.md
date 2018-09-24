@@ -12,9 +12,20 @@ an account.
 
     bin/setup
 
+By default it'll create 2 accounts with ids: 1 and 2. Where the first account will
+be with 100_000 of credit.
+
+## Running dev server
+
+    rails s -p 4000
+
 ## Running tests
 
     rspec
+
+## Running rubocop
+
+    rubocop
 
 ## Endpoints
 
