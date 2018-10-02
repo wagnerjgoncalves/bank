@@ -22,4 +22,24 @@ describe Transaction do
       it { should allow_value('debit').for(:kind) }
     end
   end
+
+  describe '#to_h' do
+    describe 'with an empty transaction' do
+      it { expect(subject.to_h[:id]).to be_nil }
+      it { expect(subject.to_h[:kind]).to be_nil }
+      it { expect(subject.to_h[:amount]).to be_nil }
+      it { expect(subject.to_h[:created]).to be_nil }
+    end
+
+    describe 'with a transaction' do
+      let(:account) { create(:account) }
+
+      subject { create(:transaction, :credit, amount: 100, account: account) }
+
+      it { expect(subject.to_h[:id]).to_not be_nil }
+      it { expect(subject.to_h[:kind]).to eq 'credit'}
+      it { expect(subject.to_h[:amount]).to eq 100 }
+      it { expect(subject.to_h[:created_at]).to_not be_nil }
+    end
+  end
 end
