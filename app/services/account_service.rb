@@ -24,6 +24,29 @@ class AccountService
     false
   end
 
+  def self.statements(account_id)
+    account = Account.find_by(id: account_id)
+
+    return render_invalid_account_error unless account
+
+    balance = 0
+
+    statements = account.transactions.map do |transaction|
+      if transaction.credit?
+        balance += transaction.amount
+      else
+        balance -= transaction.amount
+      end
+
+      transaction.to_h.merge(balance: balance)
+    end
+
+    {
+      status: :ok,
+      data: statements
+    }
+  end
+
   class << self
     private
 
